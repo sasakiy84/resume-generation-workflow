@@ -1,0 +1,4 @@
+*.aux
+*.bbl
+*.run.xml
+dist/**

@@ -1,0 +1,16 @@
+% --- heading style
+% https://github.com/texjporg/jsclasses/blob/02fc19e570e228acbf874ddec69a43c869b9c3e9/jis/jsarticle.cls#L1332
+\renewcommand{\jsParagraphMark}{}
+% paragraph で改行しないようにする
+\makeatletter
+\if@twocolumn
+  \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\z@}%
+    {\z@}{.4\Cvs} % 改行する
+    {\normalfont\normalsize\headfont\jsParagraphMark}}
+\else
+  \renewcommand{\paragraph}{\@startsection{paragraph}{4}{\z@}%
+    {0.5\Cvs \@plus.5\Cdp \@minus.2\Cdp}%
+    {.5\Cvs \@plus.3\Cdp}% 改行する
+    {\normalfont\normalsize\headfont\jsParagraphMark}}
+\fi
+\makeatother

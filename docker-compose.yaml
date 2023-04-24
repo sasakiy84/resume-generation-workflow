@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  pandoc:
+    build: 
+      dockerfile: docker/pandoc/Dockerfile
+      context: .
+    container_name: latex-resume-generator-pandoc
+    volumes:
+      - type: bind
+        source: .
+        target: /data
+    command: --from=markdown+hard_line_breaks --to=latex --number-sections -o /data/dist/main.tex contents/main.md
+  texlive:
+    container_name: latex-resume-generator-texlive
+    build: 
+      dockerfile: docker/tex/Dockerfile
+      context: .
+    volumes:
+      - type: bind
+        source: .
+        target: /workdir
+    depends_on:
+      pandoc:
+        condition: service_completed_successfully
+    command: sh -c 'latexmk -lualatex layout.tex && latexmk -c layout'
